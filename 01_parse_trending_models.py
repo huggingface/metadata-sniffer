@@ -186,11 +186,13 @@ if __name__ == "__main__":
         open_avocado_discussions = row["open_discussions_with_avocado_participation"]
         if open_avocado_discussions:
             # do not add model id to problems (as this is already been taken care of)
-            models_with_open_pending_prs.append({"id": row["id"], "open_discussions": open_avocado_discussions})
+            models_with_open_pending_prs.append(
+                {"id": row["id"], "open_discussions": open_avocado_discussions}
+            )
             continue
 
         for issue in row["metadata_issues"]:
-            models_by_issue_type[issue].append(row["id"])          
+            models_by_issue_type[issue].append(row["id"])
 
     # send the updates to slack
     messages = [
