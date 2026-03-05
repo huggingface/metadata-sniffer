@@ -10,6 +10,7 @@ class SlackMessageType(Enum):
     HEADER = 1
     DIVIDER = 2
     SECTION = 3
+    TABLE = 4
 
 
 @dataclass
@@ -47,6 +48,12 @@ def format_slack_message(text: str, msg_type: SlackMessageType) -> Dict[str, Any
         }
     elif msg_type == SlackMessageType.DIVIDER:
         return {"type": "divider"}
+    elif msg_type == SlackMessageType.TABLE:
+        return {
+            "type": "table",
+            "column_settings": [{"is_wrapped": True}, {"align": "left"}],
+            "rows": text,
+        }
     else:
         raise NotImplementedError(f"Unsupported SlackMessageType: {msg_type}")
 
