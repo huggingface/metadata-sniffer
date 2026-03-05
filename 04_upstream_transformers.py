@@ -23,6 +23,7 @@ class CustomCodeResult:
     id: str
     days_passed: int
     num_downloads: int
+    trending_score: int
 
 
 def analyze_custom_model_metadata(
@@ -32,8 +33,9 @@ def analyze_custom_model_metadata(
     model_id = model_info.id
     num_downloads = model_info.downloads
     days_passed = (now - model_info.created_at).days
+    trending_score = model_info.trending_score
     custom_code_result = CustomCodeResult(
-        id=model_id, days_passed=days_passed, num_downloads=num_downloads
+        id=model_id, days_passed=days_passed, num_downloads=num_downloads, trending_score=trending_score,
     )
     return custom_code_result
 
@@ -48,6 +50,7 @@ if __name__ == "__main__":
 
     custom_code_models = huggingface_api.list_models(
         filter=["custom_code", "transformers"],
+        sort="trendingScore",
         limit=100,
         token=hf_token,
         full=True,
@@ -75,7 +78,7 @@ if __name__ == "__main__":
 
     trending_custom_models_ds = Dataset.from_list(custom_code_results)
     trending_custom_models_ds_sorted = trending_custom_models_ds.sort(
-        column_names="num_downloads",
+        column_names="trending_score",
         reverse=True,
     )
     column_names = trending_custom_models_ds_sorted.column_names
@@ -127,5 +130,5 @@ if __name__ == "__main__":
     ]
 
     send_slack_message(
-        client=slack_client, channel_name=slack_config.channel_name, messages=messages
+        client=slack_client, channel_name=slack_config.debug_channel_name, messages=messages
     )
