@@ -4,7 +4,8 @@ from typing import List
 
 @dataclass
 class SlackConfig:
-    channel_name = "#hub-model-metadata-snippets-sprint"
+    metadata_channel_name = "#hub-model-metadata-snippets-sprint"
+    custom_code_channel_name = "#custom-code-repos"
     # debug_channel_name = "#exp-slack-alerts"
 
 

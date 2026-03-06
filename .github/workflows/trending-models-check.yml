@@ -27,14 +27,20 @@ jobs:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: python 01_parse_trending_models.py
 
-    - name: Step 2 - Process Code for HF Jobs
+    - name: Step 2 - Custom Code Repos
       env:
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      run: python 02_process_code.py
+      run: python 04_upstream_transformers.py
 
-    - name: Step 3 - Execute code using HF Jobs
-      env:
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-        HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      run: python 03_run_jobs.py
+    # - name: Step 2 - Process Code for HF Jobs
+    #   env:
+    #     SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+    #     HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    #   run: python 02_process_code.py
+
+    # - name: Step 3 - Execute code using HF Jobs
+    #   env:
+    #     SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+    #     HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    #   run: python 03_run_jobs.py

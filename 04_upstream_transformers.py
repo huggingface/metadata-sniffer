@@ -1,3 +1,7 @@
+"""
+Figures out the custom code repos in hub and alerts the transformers team
+to figure out which repos need to be upstreamed to transformers library.
+"""
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -130,5 +134,5 @@ if __name__ == "__main__":
     ]
 
     send_slack_message(
-        client=slack_client, channel_name=slack_config.debug_channel_name, messages=messages
+        client=slack_client, channel_name=slack_config.custom_code_channel_name, messages=messages
     )
