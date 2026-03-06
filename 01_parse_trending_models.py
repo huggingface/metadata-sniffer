@@ -35,6 +35,7 @@ class ModelMetadataResult:
     id: str
     should_skip_code_exec: bool = False
     metadata_issues: List[str] = field(default_factory=list)
+    has_notebook: bool = False
     open_discussions_with_avocado_participation: List[OpenAvocadoDiscussion] = field(
         default_factory=list
     )
@@ -202,7 +203,7 @@ if __name__ == "__main__":
         ),
     ]
     send_slack_message(
-        client=slack_client, channel_name=slack_config.channel_name, messages=messages
+        client=slack_client, channel_name=slack_config.metadata_channel_name, messages=messages
     )
 
     # alert slack with the issues
@@ -216,7 +217,7 @@ if __name__ == "__main__":
             # no issues found
             send_slack_message(
                 client=slack_client,
-                channel_name=slack_config.channel_name,
+                channel_name=slack_config.metadata_channel_name,
                 messages=[
                     title_msg,
                     SlackMessage(
@@ -230,7 +231,7 @@ if __name__ == "__main__":
         for chunk in _chunk_markdown(lines, max_len=2900):
             send_slack_message(
                 client=slack_client,
-                channel_name=slack_config.channel_name,
+                channel_name=slack_config.metadata_channel_name,
                 messages=[
                     title_msg,
                     SlackMessage(text=chunk, msg_type=SlackMessageType.SECTION),
@@ -251,7 +252,7 @@ if __name__ == "__main__":
     for chunk in _chunk_markdown(lines, max_len=2900):
         send_slack_message(
             client=slack_client,
-            channel_name=slack_config.channel_name,
+            channel_name=slack_config.metadata_channel_name,
             messages=[
                 title_msg,
                 SlackMessage(text=chunk, msg_type=SlackMessageType.SECTION),
@@ -264,6 +265,6 @@ if __name__ == "__main__":
     )
     send_slack_message(
         client=slack_client,
-        channel_name=slack_config.channel_name,
+        channel_name=slack_config.metadata_channel_name,
         simple_text=f"Trending Models Dataset Uploaded to <https://huggingface.co/datasets/{dataset_config.trending_models_metadata_id}|{dataset_config.trending_models_metadata_id}>",
     )
