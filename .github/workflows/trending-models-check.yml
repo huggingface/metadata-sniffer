@@ -5,8 +5,12 @@ on:
     - cron: "0 7 * * 1-5" # Runs Mon to Fri at 9:00 AM CEST / 8:00 AM CET
   workflow_dispatch: # Allows manual triggering
 
+permissions: {}
+
 jobs:
   run-pipeline:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
