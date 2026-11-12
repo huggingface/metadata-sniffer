@@ -46,3 +46,13 @@ class ModelCheckerConfig:
 @dataclass
 class ExecuteCodeConfig:
     docker_image: str = "ghcr.io/astral-sh/uv:debian"
+    jobs_namespace: str = "suvadityamuk"
+
+
+@dataclass
+class AgentConfig:
+    # False: proposed PRs are posted to Slack for approval first; True: opened directly
+    auto_open_prs: bool = False
+    num_trending_models_per_task: int = 5
+    max_snippet_runs: int = 3  # original run + 2 repair attempts
+    max_cost_per_run_usd: float = 10.0
