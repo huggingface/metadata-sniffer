@@ -308,7 +308,7 @@ if __name__ == "__main__":
             model_id=model_id,
             ds_config=dataset_config,
             huggingface_api=huggingface_api,
-            channel_name=slack_config.channel_name,
+            channel_name=slack_config.metadata_channel_name,
             hf_token=hf_token,
         )
         dataset_rows.append(asdict(model_code_info))
@@ -319,6 +319,6 @@ if __name__ == "__main__":
     )
     send_slack_message(
         client=slack_client,
-        channel_name=slack_config.channel_name,
+        channel_name=slack_config.metadata_channel_name,
         simple_text=f"HF Jobs URL Dataset Uploaded to <https://huggingface.co/datasets/{dataset_config.hf_jobs_url_dataset_id}|{dataset_config.hf_jobs_url_dataset_id}>",
     )
