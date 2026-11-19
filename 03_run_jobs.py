@@ -44,7 +44,7 @@ if __name__ == "__main__":
         if selected_gpu is not None:
             for script_url in row["code_urls"]:
                 run_job(
-                    namespace="ariG23498",
+                    namespace=execution_config.jobs_namespace,
                     token=hf_token,
                     image=docker_image,
                     command=[

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional, Dict, Any
 
+import requests
 from slack_sdk import WebClient
 
 
@@ -83,3 +84,16 @@ def send_slack_message(
         text="Hello",  # fallback text for notifications/search
         thread_ts=parent_message_ts,
     )
+
+
+def send_webhook_message(
+    webhook_url: str,
+    messages: List[SlackMessage],
+    fallback_text: str = "Metadata agent update",
+):
+    """Posts block messages through a Slack incoming webhook (the channel is fixed by the webhook)."""
+    blocks = [format_slack_message(text=m.text, msg_type=m.msg_type) for m in messages]
+    response = requests.post(
+        webhook_url, json={"text": fallback_text, "blocks": blocks}, timeout=30
+    )
+    response.raise_for_status()
